@@ -1,8 +1,8 @@
 pipeline {
     agent any
     stages {
-        stage (git) {
-            steps{
+        stage (SCM) {
+            steps {
                 git branch: 'main', url: 'https://github.com/vamsibyramala/softwaremakers.git'
             }
         }
@@ -13,7 +13,7 @@ pipeline {
         }
         stage (deploy) {
             steps {
-                deploy adapters: [tomcat9(credentialsId: '10e05f26-2244-4709-aa35-ea802c18aeed', path: '', url: 'http://65.2.177.250:8081/')], contextPath: 'test', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.232.127.170:8080/')], contextPath: 'vamsi', war: '**/*.war'
             }
         }
     }
