@@ -1,3 +1,2 @@
 # maven project
 maven
-test
