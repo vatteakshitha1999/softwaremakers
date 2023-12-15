@@ -1,0 +1,27 @@
+pipeline {
+  agent any
+  environment {
+    docker = credentials('dockerhub')
+  }
+
+  stages {
+      stage ('git') {
+          steps {
+          git branch: 'main', url: 'https://github.com/vamsibyramala/softwaremakers.git'
+        }
+      }
+    stage ('code build') {
+        steps {
+              sh 'mvn clean package'
+          }
+      }
+    stage('Docker Login') {
+      steps {
+        withDockerRegistry(credentialsId: 'dockerhub') {
+            sh 'docker build -t vamsibyramala/my-project .'
+            sh 'docker push vamsibyramala/my-project'
+        }
+      }
+    }
+  }
+}
